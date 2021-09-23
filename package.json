@@ -1,0 +1,9 @@
+{
+  "name": "riakuto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/otegami/riakuto.git",
+  "author": "otegami <a.s.takuya1026@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
