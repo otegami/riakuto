@@ -1,36 +1,31 @@
-import { useEffect, VFC } from 'react'
-import { Redirect, Route, Switch, useLocation } from 'react-router'
-import ReactGA from 'react-ga'
+import React, { FC, useEffect } from 'react';
+import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router';
 
-import Home from 'components/pages/Home'
-import User from 'components/pages/User'
-import NotFound from 'components/pages/NotFound'
+import Home from 'components/pages/Home';
+import Characters from 'components/pages/Characters';
+import './App.css';
 
-const App: VFC = () => {
-  const location = useLocation()
-  
+const App: FC = () => {
+  const { hash, pathname } = useLocation();
+  const { action } = useHistory();
+
   useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search)
-  }, [location.key])
+    if (!hash || action !== 'POP') {
+      window.scrollTo(0, 0);
+    }
+  }, [action, hash, pathname]);
 
-  return(
-    <Switch>
-      <p>弊社のホームページ</p>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Redirect
-        from="/user/profile/:userId"
-        to="/user/:userId"
-      />
-      <Route path="/user/:userId">
-        <User />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
-  )
-}
+  return (
+    <div className="container">
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/characters" component={Characters} />
+        <Redirect to="/" />;
+      </Switch>
+    </div>
+  );
+};
 
-export default App
+export default App;
