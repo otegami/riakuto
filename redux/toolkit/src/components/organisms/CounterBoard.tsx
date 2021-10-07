@@ -3,7 +3,7 @@ import { Button, Card, Statistic } from 'semantic-ui-react';
 import './CounterBoard.css';
 
 const BULK_UNIT = 10;
-interface Props {
+export interface Props {
   count?: number;
   add?: (amount: number) => void;
   decrement?: () => void;
