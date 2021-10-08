@@ -1,71 +1,35 @@
 import React, { VFC, useReducer } from 'react'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import CounterWidget from 'components/templates/CounterWidget'
 
-const CounterActionType = {
-  added: 'counter/added',
-  decremented: 'counter/decremented',
-  incremented: 'counter/incremented'
-} as const
-
-type ValueOf<T> = T[keyof T]
-type CounterAction = {
-  type: ValueOf<typeof CounterActionType>
-  payload?: number
-}
-
 type CounterState = { count: number }
+const initialState: CounterState =  { count: 0 }
 
-const counterReducer = (
-  state: CounterState,
-  action: CounterAction
-): CounterState => {
-  switch (action.type) {
-    case CounterActionType.added:
-      return {
-        ...state,
-        count: state.count + (action.payload ?? 0)
-      }
-    case CounterActionType.decremented:
-      return {
-        ...state,
-        count: state.count -1
-      }
-    case CounterActionType.incremented:
-      return {
-        ...state,
-        count: state.count + 1
-      }
-    default: {
-      const _: never = action.type
-      return state
-    }
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    added: (state, action: PayloadAction<number>) => ({
+      ...state,
+      coun: state.count + action.payload
+    }),
+    decremented: state => ({ ...state, count: state.count - 1 }),
+    incremented: state => ({ ...state, count: state.count + 1 }),
   }
-}
-
-const add = (payload: number): CounterAction => ({
-  type: CounterActionType.added,
-  payload,
-})
-
-const decrement = (): CounterAction => ({
-  type: CounterActionType.decremented
-})
-
-const increment = (): CounterAction => ({
-  type: CounterActionType.incremented
 })
 
 const EnhancedCounterWidget: VFC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
   const [state, dispatch] = useReducer(
-    counterReducer, initialCount, (count: number) => ({count})
+    counterSlice.reducer, initialCount, (count: number): CounterState => ({ count })
   )
+  const { added, decremented, incremented } = counterSlice.actions
 
   return (
     <CounterWidget
       count={state.count}
-      add={(amount: number) => dispatch(add(amount))}
-      decrement={() => dispatch(decrement())}
-      increment={() => dispatch(increment())}
+      add={(amount: number) => dispatch(added(amount))}
+      decrement={() => dispatch(decremented())}
+      increment={() => dispatch(incremented())}
     />
   )
 }
