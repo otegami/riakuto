@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const delay = (time: number) => (result: any) => new Promise((resolve) => {
+  setTimeout(() => resolve(result), time)
+})
 
-export default App;
+const Other = lazy(() => import('./components/molecules/Other').then(delay(500)))
+
+const App = () => (
+  <div className="App">
+    <h1>Hello Suspense</h1>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Other />
+    </Suspense>
+  </div>
+)
+
+export default App
