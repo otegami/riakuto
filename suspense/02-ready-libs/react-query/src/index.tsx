@@ -16,8 +16,10 @@ const queryConfig: ReactQueryConfig = {
   },
   queries: {
     retry: 0,
-    // useErrorBoundary: true,
   },
+  nutations: {
+    retry: 0
+  }
 };
 
 ReactDOM.render(
