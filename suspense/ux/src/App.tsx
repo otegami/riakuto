@@ -4,7 +4,7 @@ import './App.css';
 
 const App: FC = () => (
   <>
-    <Members enablePrefetch={false} />
+    <Members enablePrefetch />
   </>
 );
 

@@ -80,7 +80,7 @@ const Members: FC<Props> = ({ orgCodeList, prefetch = () => undefined }) => {
           onError={() => {
             ebKey.current += 1;
           }}
-          key={ebKey.current}
+          // key={ebKey.current}
         >
           <SuspenseList revealOrder="forwards">
             <Suspense fallback={<Spinner size="small" />}>
