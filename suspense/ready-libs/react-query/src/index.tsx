@@ -17,9 +17,6 @@ const queryConfig: ReactQueryConfig = {
   queries: {
     retry: 0,
   },
-  nutations: {
-    retry: 0
-  }
 };
 
 ReactDOM.render(
